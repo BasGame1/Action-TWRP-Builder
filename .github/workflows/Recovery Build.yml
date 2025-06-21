@@ -158,6 +158,12 @@ jobs:
         export ALLOW_MISSING_DEPENDENCIES=true
         lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+    - name: List built files
+      run: |
+        echo "Listing contents of out/target/product/akita/"
+        ls -Rla workspace/out/target/product/akita/
+        # You might want to make this step always run, even if previous steps fail
+        # if: always()
 
     - name: Upload to Release
       uses: softprops/action-gh-release@v2
